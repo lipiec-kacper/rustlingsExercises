@@ -12,7 +12,8 @@ fn vec_loop(mut v: Vec<i32>) -> Vec<i32> {
     for element in v.iter_mut() {
         *element = *element * 2;
     }
-
+    // More memory efficient approche than the one under because this one just iter and change the
+    // value of element, where the one under creates a new vector
     // At this point, `v` should be equal to [4, 8, 12, 16, 20].
     v
 }
