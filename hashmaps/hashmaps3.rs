@@ -14,8 +14,6 @@
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 // A structure to store the goal details of a team.
@@ -29,7 +27,7 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
     // The name of the team is the key and its associated struct is the value.
     let mut scores: HashMap<String, Team> = HashMap::new();
     let mut v: Vec<String> = Vec::new();
-    
+
     for line in results.lines() {
         let items: Vec<&str> = line.split(',').collect();
         for item in &items {
@@ -39,42 +37,45 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
 
     let mut i = 0;
     while i < v.len() {
-            if v[i].len() > 1 {
-                for(key, _value) in &scores{
-                    if *key == v[i] && i+1 < v.len(){
-                        i+=1;
-                    }
+        if v[i].len() > 1 {
+            for (key, _value) in &scores {
+                if *key == v[i] && i + 1 < v.len() {
+                    i += 1;
                 }
-                if v[i].len() > 1{
-                    scores.insert(v[i].to_string(), Team{goals_scored : 0, goals_conceded:0});
-                    i+=1;
-                }
-                
-        }else if v[i].len() == 1{
-                let mut goal_conceded_index = 0;
-
-                if i + 1 != v.len() && v[i + 1].len() == 1 {
-                    goal_conceded_index = i + 1;
-                }else if i + 1 == v.len(){
-                    goal_conceded_index = i - 1;
-                }else if v[i + 1].len() > 1 && i + 1 != v.len(){
-                     goal_conceded_index = i - 1;
-                }
-
-
-                if let Some(team) = scores.get_mut(&v[i-2].to_string()) {
-                    team.goals_scored += v[i].parse().unwrap_or(0);
-                }
-
-                if let Some(team) = scores.get_mut(&v[i-2].to_string()){
-                    team.goals_conceded += v[goal_conceded_index].parse().unwrap_or(0);
-                }
-
-                i+=1;
-                goal_conceded_index = 0;
             }
-        }
+            if v[i].len() > 1 {
+                scores.insert(
+                    v[i].to_string(),
+                    Team {
+                        goals_scored: 0,
+                        goals_conceded: 0,
+                    },
+                );
+                i += 1;
+            }
+        } else if v[i].len() == 1 {
+            let mut goal_conceded_index = 0;
 
+            if i + 1 != v.len() && v[i + 1].len() == 1 {
+                goal_conceded_index = i + 1;
+            } else if i + 1 == v.len() {
+                goal_conceded_index = i - 1;
+            } else if v[i + 1].len() > 1 && i + 1 != v.len() {
+                goal_conceded_index = i - 1;
+            }
+
+            if let Some(team) = scores.get_mut(&v[i - 2].to_string()) {
+                team.goals_scored += v[i].parse().unwrap_or(0);
+            }
+
+            if let Some(team) = scores.get_mut(&v[i - 2].to_string()) {
+                team.goals_conceded += v[goal_conceded_index].parse().unwrap_or(0);
+            }
+
+            i += 1;
+            goal_conceded_index = 0;
+        }
+    }
 
     scores
 }
@@ -91,7 +92,6 @@ mod tests {
             + "Germany,England,2,1\n";
         results
     }
-
 
     #[test]
     fn build_scores() {
