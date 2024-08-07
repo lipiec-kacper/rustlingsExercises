@@ -25,7 +25,7 @@ pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let processing_fee = 1;
     let cost_per_item = 5;
     let qty = item_quantity.parse::<i32>()?;
-    //The "item_quantity.parse::<i32>()?" tries to parse the string tinot an 'i32'. If it fails, it
+    //The "item_quantity.parse::<i32>()?" tries to parse the string into an 'i32'. If it fails, it
     //automatically returns the 'ParseIntError' and exists the function
 
     Ok(qty * cost_per_item + processing_fee)
